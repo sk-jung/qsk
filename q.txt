@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>큐스토어 - 신선한 농산물</title>
+  <style>
+    body { margin: 0; font-family: 'Noto Sans KR', sans-serif; background: #e0f7fa; color: #333; }
+    header, footer { background: #4CAF50; color: white; text-align: center; padding: 20px; }
+    .banner { width: 100%; height: 250px; object-fit: cover; }
+    .intro, .product-section { text-align: center; padding: 30px 15px; }
+    .product-section { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .product-card { width: 300px; background: #fff; border: 1px solid #eee; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .product-card img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; }
+    .info { padding: 15px; }
+    .info h3 { margin: 0; font-size: 18px; }
+    .info p { font-size: 14px; color: #777; margin: 10px 0; }
+    .price { font-size: 18px; font-weight: bold; color: #e91e63; }
+    .buy-btn { display: block; width: 90%; margin: 15px auto; padding: 10px 0; background: #4CAF50; color: white; text-align: center; text-decoration: none; border-radius: 5px; cursor: pointer; }
+
+    .order-form { display: none; max-width: 500px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .order-form h2 { text-align: center; }
+    label { display: block; margin-top: 15px; }
+    input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; }
+    .submit-btn { margin-top: 20px; background: #4CAF50; color: white; padding: 12px; width: 100%; border: none; font-size: 16px; border-radius: 5px; cursor: pointer; }
+    .submit-btn:hover { background: #45a049; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 onclick="openOtherProducts()">신선한 농산물 신속배송 - 큐스토어</h1>
+</header>
+
+<style>
+  header h1 {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  header h1:hover {
+    color: #ffc107;
+    transform: scale(1.05);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+  }
+</style>
+
+  <img src="C:\Users\USER\Downloads\조합사진.png" alt="배너" class="banner" />
+
+  <div id="main-section">
+    <section class="intro">
+      <h2>오늘 수확한 농산물, 내일 아침 도착!</h2>
+      <p>전국 각지의 제철 농산물을 빠르게 집 앞으로 보내드립니다.</p>
+    </section>
+
+    <section class="product-section">
+      <div class="product-card">
+        <img src="C:\Users\USER\Downloads\음성 마늘.png" alt="마늘" onclick="openInfo('garlic')" />
+        <div class="info">
+          <h3>음성 마늘 3kg</h3>
+          <p>향긋하고 단단한 충북 음성산 마늘</p>
+          <div class="price">24,900원</div>
+          <div class="buy-btn" onclick="showOrderForm('음성 마늘 3kg', '24,900원')">구매하기</div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="C:\Users\USER\Downloads\음성 고추.png" alt="고추" onclick="openInfo('chili')" />
+        <div class="info">
+          <h3>음성 햇고추 2kg</h3>
+          <p>맵고 싱싱한 충북 음성산 고추</p>
+          <div class="price">27,000원</div>
+          <div class="buy-btn" onclick="showOrderForm('음성 고추 2kg', '27,000원')">구매하기</div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="C:\Users\USER\Downloads\대학 찰옥수수.png" alt="옥수수" onclick="openInfo('corn')" />
+        <div class="info">
+          <h3>대학 찰옥수수 30개입</h3>
+          <p>쫀득하고 달콤한 프리미엄 찰옥수수</p>
+          <div class="price">21,500원</div>
+          <div class="buy-btn" onclick="showOrderForm('대학 찰옥수수 30개입', '21,500원')">구매하기</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="order-section" class="order-form">
+    <h2 id="product-name">상품 주문서</h2>
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="hidden" name="product" id="product-input" />
+      <label>이름</label>
+      <input type="text" name="name" required />
+      <label>연락처</label>
+      <input type="tel" name="phone" required />
+      <label>주소</label>
+      <input type="text" name="address" required />
+      <label>수량</label>
+      <select name="quantity">
+        <option value="1">1개</option>
+        <option value="2">2개</option>
+        <option value="3">3개</option>
+      </select>
+      <button type="submit" class="submit-btn">주문하기</button>
+    </form>
+    <button onclick="goBack()" class="submit-btn" style="background:#ccc; margin-top:10px;">← 뒤로가기</button>
+  </div>
+
+  <footer>
+    ⓒ 2025 큐스토어 | 고객센터: 1234-5678 | 사업자등록번호: 123-45-67890
+  </footer>
+<script>
+function openOtherProducts() {
+  const newWin = window.open('', '_blank', 'width=600,height=500');
+  newWin.document.write(`
+    <html>
+    <head>
+      <title>추천 상품 - 큐스토어</title>
+      <style>
+        body { font-family: 'Noto Sans KR'; padding: 20px; background: #f5f5f5; }
+        h2 { color: #4CAF50; }
+        .product-list { display: flex; flex-direction: column; gap: 20px; }
+        .product { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0,0,0,0.1); }
+        .product h3 { margin: 0 0 5px; }
+        .price { color: #e91e63; font-weight: bold; }
+      </style>
+    </head>
+    <body>
+      <h2>📦 추천 상품 모음</h2>
+      <div class="product-list">
+        <div class="product">
+          <h3>영월 감자 5kg</h3>
+          <p class="price">13,500원</p>
+        </div>
+        <div class="product">
+          <h3>청송 사과 3kg</h3>
+          <p class="price">19,800원</p>
+        </div>
+        <div class="product">
+          <h3>해남 배추김치 5kg</h3>
+          <p class="price">24,000원</p>
+        </div>
+        <div class="product">
+          <h3>전남 곡성 멜론</h3>
+          <p class="price">15,900원</p>
+        </div>
+      </div>
+      <button onclick="window.close()" style="margin-top:20px;">닫기</button>
+    </body>
+    </html>
+  `);
+  newWin.document.close();
+}
+</script>
+ 
+<script>
+function openInfo(item) {
+  const infoMap = {
+    garlic: {
+      title: "음성 마늘",
+      description: "충북 음성에서 수확된 향긋하고 단단한 마늘로, 면역력 강화와 항균 작용에 효과적입니다."
+    },
+    chili: {
+      title: "음성 고추",
+      description: "비타민 C와 캡사이신이 풍부하여 혈액순환과 다이어트에 도움을 주는 음성산 고추입니다."
+    },
+    corn: {
+      title: "대학 찰옥수수",
+      description: "쫀득한 식감과 달콤한 맛이 일품인 대학 찰옥수수로, 식이섬유가 풍부해 건강 간식으로 적합합니다."
+    }
+  };
+
+  const product = infoMap[item];
+  const popup = window.open('', '_blank', 'width=400,height=400');
+  popup.document.write(`
+    <html><head><title>${product.title}</title>
+    <style>body{font-family:'Noto Sans KR';padding:20px;line-height:1.6;}h1{color:#4CAF50;}</style></head>
+    <body>
+      <h1>${product.title}</h1>
+      <p>${product.description}</p>
+      <button onclick="window.close()">창 닫기</button>
+    </body></html>
+  `);
+  popup.document.close();
+}
+</script>
+
+</body>
+</html>
